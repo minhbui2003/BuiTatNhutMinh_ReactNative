@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Header Color</title>
+</head>
+<body>
+    <h1>This is a Header</h1>
+
+    <script>
+        (function () {
+            const header = document.querySelector('h1');
+            // Attach an event listener to the body element
+            document.body.addEventListener('click', function () {
+                header.style.color = 'blue';
+            });
+        })();
+    </script>
+</body>
+</html>

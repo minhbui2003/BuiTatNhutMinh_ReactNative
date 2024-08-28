@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll App</title>
+</head>
+<body>
+    <div id="pollContainer">
+        <h1>Poll</h1>
+        <p id="pollQuestion"></p>
+        <ul id="pollOptions"></ul>
+        <button id="answerPollButton">Answer poll</button>
+    </div>
+
+    <script>
+        // Poll object definition
+        const poll = {
+            question: 'What is your favourite programming language?',
+            options: ['JavaScript', 'Python', 'Rust', 'C++'],
+            answers: [0, 0, 0, 0],
+
+            // Method to register a new answer
+            registerNewAnswer: function() {
+                const input = prompt(`${this.question}\n${this.options.map((opt, i) => `${i}: ${opt}`).join('\n')}\n(Write option number)`);
+                
+                const answer = Number(input);
+                if (Number.isNaN(answer) || answer < 0 || answer >= this.options.length) {
+                    alert('Invalid input. Please enter a number corresponding to the options.');
+                    return;
+                }
+
+                this.answers[answer]++;
+                this.displayResults();
+            },
+
+            // Method to display the results
+            displayResults: function(type = 'array') {
+                if (type === 'array') {
+                    console.log(this.answers);
+                } else if (type === 'string') {
+                    console.log(`Poll results are ${this.answers.join(', ')}`);
+                }
+            }
+        };
+
+        // Initialize the poll question and options in the HTML
+        document.getElementById('pollQuestion').textContent = poll.question;
+        const optionsList = document.getElementById('pollOptions');
+        poll.options.forEach((option, index) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${index}: ${option}`;
+            optionsList.appendChild(listItem);
+        });
+
+        // Attach event listener to the "Answer poll" button
+        document.getElementById('answerPollButton').addEventListener('click', () => {
+            poll.registerNewAnswer();
+        });
+
+        // Bonus: Test displayResults with external arrays
+        const data1 = [5, 2, 3];
+        const data2 = [1, 5, 3, 9, 6, 1];
+
+        const displayResults = function(results, type = 'array') {
+            if (type === 'array') {
+                console.log(results);
+            } else if (type === 'string') {
+                console.log(`Poll results are ${results.join(', ')}`);
+            }
+        };
+
+        console.log('Test Data 1:');
+        displayResults(data1);
+        console.log('Test Data 2:');
+        displayResults(data2, 'string');
+    </script>
+</body>
+</html>
